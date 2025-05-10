@@ -216,12 +216,12 @@ resource "helm_release" "chartmuseum" {
 
     set_sensitive {
     name  = "env.secret.BASIC_AUTH_USER"
-    value = var.aws_basic_auth_user
+    value = var.basic_auth_user
   }
 
   set_sensitive {
     name  = "env.secret.BASIC_AUTH_PASS"
-    value = var.aws_secret_auth_pass
+    value = var.secret_auth_pass
   }
 
   # Ingress Configuration

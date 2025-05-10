@@ -269,138 +269,140 @@ resource "helm_release" "promtail" {
 
 
  
-#resource "helm_release" "kube-prometheus-stack" {
-#  name       = "kube-prometheus-stack"
-#  namespace  = kubernetes_namespace.monitoring.metadata[0].name
-#  repository = "https://prometheus-community.github.io/helm-charts"
-#  chart      = "kube-prometheus-stack"
-#  version    = "48.1.1"
+resource "helm_release" "kube-prometheus-stack" {
+  name       = "kube-prometheus-stack"
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
+  version    = "48.1.1"
 
-#    set_sensitive {
-#    name  = "alertmanager.config.receivers[1].sns_configs[0].sigv4.access_key"
-#    value = var.aws_access_key
-#  }
+    set_sensitive {
+    name  = "alertmanager.config.receivers[1].sns_configs[0].sigv4.access_key"
+    value = var.aws_access_key
+  }
 
-#  set_sensitive {
-#    name  = "alertmanager.config.receivers[1].sns_configs[0].sigv4.secret_key"
-#    value = var.aws_secret_key
-#  }
+  set_sensitive {
+    name  = "alertmanager.config.receivers[1].sns_configs[0].sigv4.secret_key"
+    value = var.aws_secret_key
+  }
 
-#  values = [
-#    <<-EOF
-#    alertmanager:
-#      config:
-#        global:
-#          resolve_timeout: 5m
-#        inhibit_rules:
-#          - source_matchers:
-#              - 'severity = critical'
-#            target_matchers:
-#              - 'severity =~ warning|info'
-#            equal:
-#              - 'namespace'
-#              - 'alertname'
-#          - source_matchers:
-#              - 'severity = warning'
-#            target_matchers:
-#              - 'severity = info'
-#            equal:
-#              - 'namespace'
-#              - 'alertname'
-#          - source_matchers:
-#              - 'alertname = InfoInhibitor'
-#            target_matchers:
-#              - 'severity = info'
-#            equal:
-#              - 'namespace'
-#        route:
-#          receiver: sns-alerts
-#          group_by: ["alertname"]
-#          group_wait: 30s
-#          group_interval: 5m
-#          repeat_interval: 24h
-#          routes:
-#            - match:
-#                alertname: InfoInhibitor
-#              receiver: 'null'
-#            - match:
-#               alertname: "KubeControllerManagerDown"
-#              receiver: 'null'
-#            - match:
-#                alertname: "KubeAggregatedAPIErrors"
-#              receiver: 'null'
-#            - match:
-#                alertname: "KubeProxyDown"
-#              receiver: 'null'
-#            - match:
-#                alertname: "KubeSchedulerDown"
-#              receiver: 'null'
-#            - match_re:
-#                job: "coredns"
-#              receiver: 'null'
-#            - match_re:
-#                severity: 'critical|warning'
-#              receiver: sns-alerts
-#        receivers:
-#          - name: 'null'
-#          - name: "sns-alerts"
-#            sns_configs:
-#            - topic_arn: "arn:aws:sns:us-east-1:985883769551:rigettidemo"
-#              api_url: https://sns.us-east-1.amazonaws.com
-#              sigv4:
-#                region: "us-east-1"
-#              subject: "rigetti-demo-cluster-[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}"
-#        templates:
-#          - '/etc/alertmanager/config/*.tmpl'
-#      ingress:
-#        enabled: true
-#        ingressClassName: nginx
-#        annotations:
-#          kubernetes.io/tls-acme: "false"
-#          cert-manager.io/cluster-issuer: "letsencrypt-prod"
-#        labels: {}
-#        hosts:
-#          - alertmanager.rigettidemo.com
-#        paths:
-#          - /
-#        pathType: Prefix
-#        tls:
-#          - secretName: alertmanager-tls
-#            hosts:
-#              - alertmanager.rigettidemo.com
-#    grafana:
-#      enabled: true
-#      persistence:
-#        enabled: true
-#        type: pvc
-#        accessModes:
-#          - ReadWriteOnce
-#        size: "2Gi"
-#        finalizers:
-#          - kubernetes.io/pvc-protection
-#      ingress:
-#        enabled: true
-#        ingressClassName: nginx
-#        annotations:
-#          kubernetes.io/tls-acme: "false"
-#          cert-manager.io/cluster-issuer: "letsencrypt-prod"
-#        labels: {}
-#        hosts:
-#          - monitoring.rigettidemo.com
-#        path: /
-#        tls: 
-#          - secretName: grafana-tls
-#            hosts:
-#              - monitoring.rigettidemo.com
-#    EOF
-#  ]
+  values = [
+    <<-EOF
+    alertmanager:
+      config:
+        global:
+          resolve_timeout: 5m
+        inhibit_rules:
+          - source_matchers:
+              - 'severity = critical'
+            target_matchers:
+              - 'severity =~ warning|info'
+            equal:
+              - 'namespace'
+              - 'alertname'
+          - source_matchers:
+              - 'severity = warning'
+            target_matchers:
+              - 'severity = info'
+            equal:
+              - 'namespace'
+              - 'alertname'
+          - source_matchers:
+              - 'alertname = InfoInhibitor'
+            target_matchers:
+              - 'severity = info'
+            equal:
+              - 'namespace'
+        route:
+          receiver: sns-alerts
+          group_by: ["alertname"]
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 24h
+          routes:
+            - match:
+                alertname: InfoInhibitor
+              receiver: 'null'
+            - match:
+               alertname: "KubeControllerManagerDown"
+              receiver: 'null'
+            - match:
+                alertname: "KubeAggregatedAPIErrors"
+              receiver: 'null'
+            - match:
+                alertname: "KubeProxyDown"
+              receiver: 'null'
+            - match:
+                alertname: "KubeSchedulerDown"
+              receiver: 'null'
+            - match_re:
+                job: "coredns"
+              receiver: 'null'
+            - match_re:
+                severity: 'critical|warning'
+              receiver: sns-alerts
+        receivers:
+          - name: 'null'
+          - name: "sns-alerts"
+            sns_configs:
+            - topic_arn: "arn:aws:sns:us-east-1:985883769551:rigettidemo"
+              api_url: https://sns.us-east-1.amazonaws.com
+              sigv4:
+                region: "us-east-1"
+              subject: "rigetti-demo-cluster-[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}"
+        templates:
+          - '/etc/alertmanager/config/*.tmpl'
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          kubernetes.io/tls-acme: "false"
+          cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        labels: {}
+        hosts:
+          - alertmanager.rigettidemo.com
+        paths:
+          - /
+        pathType: Prefix
+        tls:
+          - secretName: alertmanager-tls
+            hosts:
+              - alertmanager.rigettidemo.com
+    grafana:
+      enabled: true
+      persistence:
+        enabled: true
+        type: pvc
+        accessModes:
+          - ReadWriteOnce
+        size: "2Gi"
+        finalizers:
+          - kubernetes.io/pvc-protection
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+         kubernetes.io/tls-acme: "false"
+         cert-manager.io/cluster-issuer: "letsencrypt-prod"
+       labels: {}
+       hosts:
+         - monitoring.rigettidemo.com
+       path: /
+       tls: 
+         - secretName: grafana-tls
+           hosts:
+             - monitoring.rigettidemo.com
+   EOF
+ ]
 
-#  timeout = 1200
+ timeout = 1200
 
-#  depends_on = [
-#    kubernetes_namespace.monitoring
-#  ]
-#}
+ depends_on = [
+   kubernetes_namespace.monitoring
+ ]
+}
+
+
 
 resource "null_resource" "delay" {
   provisioner "local-exec" {

@@ -206,12 +206,12 @@ resource "helm_release" "chartmuseum" {
 
   set_sensitive {
     name  = "env.secret.AWS_ACCESS_KEY_ID"
-    value = var.aws_access_key_id
+    value = var.aws_access_key
   }
 
   set_sensitive {
     name  = "env.secret.AWS_SECRET_ACCESS_KEY"
-    value = var.aws_secret_access_key
+    value = var.aws_secret_key
   }
 
   set_sensitive {

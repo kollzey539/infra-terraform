@@ -170,101 +170,113 @@ resource "helm_release" "loki" {
 }
 
 
-#resource "helm_release" "chartmuseum" {
-#  name             = "chartmuseum"
-#  namespace        = "chartmuseum"
-#  repository       = "https://chartmuseum.github.io/charts"
-#  chart            = "chartmuseum"
-#  version          = "3.7.2"
-#  create_namespace = true
+resource "helm_release" "chartmuseum" {
+  name             = "chartmuseum"
+  namespace        = "chartmuseum"
+  repository       = "https://chartmuseum.github.io/charts"
+  chart            = "chartmuseum"
+  version          = "3.7.2"
+  create_namespace = true
 
   # ChartMuseum Storage Config
-#  set {
-#    name  = "env.open.DISABLE_API"
-#    value = "false"
-# }
+  set {
+    name  = "env.open.DISABLE_API"
+    value = "false"
+  }
 
-#  set {
-#    name  = "env.open.STORAGE"
-#    value = "amazon"
-#  }
+  set {
+    name  = "env.open.STORAGE"
+    value = "amazon"
+  }
 
-#  set {
-#    name  = "env.open.STORAGE_AMAZON_BUCKET"
-#    value = "charts-rigetti"
-#  }
+  set {
+    name  = "env.open.STORAGE_AMAZON_BUCKET"
+    value = "charts-rigetti"
+  }
 
-#  set {
-#    name  = "env.open.STORAGE_AMAZON_PREFIX"
-#    value = "rigetti"
-#  }
+  set {
+    name  = "env.open.STORAGE_AMAZON_PREFIX"
+    value = "rigetti"
+  }
 
-#  set {
-#    name  = "env.open.STORAGE_AMAZON_REGION"
-#    value = "us-east-1"
-#  }
+  set {
+    name  = "env.open.STORAGE_AMAZON_REGION"
+    value = "us-east-1"
+  }
 
-#  set_sensitive {
-#    name  = "env.secret.AWS_ACCESS_KEY_ID"
-#    value = var.aws_access_key_id
-#  }
+  set_sensitive {
+    name  = "env.secret.AWS_ACCESS_KEY_ID"
+    value = var.aws_access_key_id
+  }
 
-#  set_sensitive {
-#    name  = "env.secret.AWS_SECRET_ACCESS_KEY"
-#    value = var.aws_secret_access_key
-#  }
+  set_sensitive {
+    name  = "env.secret.AWS_SECRET_ACCESS_KEY"
+    value = var.aws_secret_access_key
+  }
+
+    set_sensitive {
+    name  = "env.secret.BASIC_AUTH_USER"
+    value = var.aws_basic_auth_user
+  }
+
+  set_sensitive {
+    name  = "env.secret.BASIC_AUTH_PASS"
+    value = var.aws_secret_auth_pass
 
   # Ingress Configuration
-#  set {
-#    name  = "ingress.enabled"
-#    value = "true"
-#  }
+  set {
+    name  = "ingress.enabled"
+    value = "true"
+  }
 
-#  set {
-#    name  = "ingress.ingressClassName"
-#    value = "nginx"
-#  }
+  set {
+    name  = "ingress.ingressClassName"
+    value = "nginx"
+  }
 
-#  set {
-#    name  = "ingress.pathType"
-#    value = "Prefix"
-#  }
+  set {
+    name  = "ingress.pathType"
+    value = "Prefix"
+  }
 
-#  set_string {
-#    name  = "ingress.annotations.cert-manager\\.io/cluster-issuer"
-#    value = "letsencrypt-prod"
-#  }
+  set {
+    name  = "ingress.annotations.cert-manager\\.io/cluster-issuer"
+    value = "letsencrypt-prod"
+    type  = "string"
+  }
 
-#  set_string {
-#    name  = "ingress.annotations.kubernetes\\.io/tls-acme"
-#    value = "false"
-#  }
+  set {
+    name  = "ingress.annotations.kubernetes\\.io/tls-acme"
+    value = "false"
+    type  = "string"
+  }
 
-#  set {
-#    name  = "ingress.hosts[0].name"
-#    value = "charts.rigettidemo.com"
-#  }
+  set {
+    name  = "ingress.hosts[0].name"
+    value = "charts.rigettidemo.com"
+  }
 
-#  set {
-#    name  = "ingress.hosts[0].path"
-#    value = "/"
-#  }
+  set {
+    name  = "ingress.hosts[0].path"
+    value = "/"
+  }
 
-#  set {
-#    name  = "ingress.hosts[0].tls"
-#    value = "true"
-#  }
+  set {
+    name  = "ingress.hosts[0].tls"
+    value = "true"
+  }
 
-#  set {
-#    name  = "ingress.tls[0].hosts[0]"
-#    value = "charts.rigettidemo.com"
-#  }
+  set {
+    name  = "ingress.tls[0].hosts[0]"
+    value = "charts.rigettidemo.com"
+  }
 
-#  set {
-#    name  = "ingress.tls[0].secretName"
-#    value = "chartmuseum-tls"
-#  }
-#}
+  set {
+    name  = "ingress.tls[0].secretName"
+    value = "chartmuseum-tls"
+  }
+}
+
 
 
 

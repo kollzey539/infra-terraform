@@ -430,7 +430,7 @@ resource "helm_release" "aws_ebs_csi_driver" {
     value = "gp2"
   }
 
-  set_string {
+  set {
     name  = "storageClasses[0].annotations.storageclass\\.kubernetes\\.io/is-default-class"
     value = "true"
   }

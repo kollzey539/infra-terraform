@@ -175,7 +175,7 @@ resource "helm_release" "chartmuseum" {
   namespace        = "chartmuseum"
   repository       = "https://chartmuseum.github.io/charts"
   chart            = "chartmuseum"
-  version          = "3.7.2"
+  version          = "3.10.4"
   create_namespace = true
 
   # ChartMuseum Storage Config

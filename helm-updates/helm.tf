@@ -273,7 +273,7 @@ resource "helm_release" "chartmuseum" {
   }
 
   set {
-    name  = "ingress.tls[0].tlsSecret"
+    name  = "ingress.hosts[0].tlsSecret"
     value = "chartmuseum-tls"
   }
 }

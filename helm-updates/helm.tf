@@ -324,7 +324,7 @@ resource "helm_release" "kube-prometheus-stack" {
                 alertname: InfoInhibitor
               receiver: 'null'
             - match:
-               alertname: "KubeControllerManagerDown"
+                alertname: "KubeControllerManagerDown"
               receiver: 'null'
             - match:
                 alertname: "KubeAggregatedAPIErrors"
@@ -382,24 +382,24 @@ resource "helm_release" "kube-prometheus-stack" {
         enabled: true
         ingressClassName: nginx
         annotations:
-         kubernetes.io/tls-acme: "false"
-         cert-manager.io/cluster-issuer: "letsencrypt-prod"
-       labels: {}
-       hosts:
-         - monitoring.rigettidemo.com
-       path: /
-       tls: 
-         - secretName: grafana-tls
-           hosts:
-             - monitoring.rigettidemo.com
-   EOF
- ]
+          kubernetes.io/tls-acme: "false"
+          cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        labels: {}
+        hosts:
+          - monitoring.rigettidemo.com
+        path: /
+        tls: 
+          - secretName: grafana-tls
+            hosts:
+              - monitoring.rigettidemo.com
+    EOF
+  ]
 
- timeout = 1200
+  timeout = 1200
 
- depends_on = [
-   kubernetes_namespace.monitoring
- ]
+  depends_on = [
+    kubernetes_namespace.monitoring
+  ]
 }
 
 

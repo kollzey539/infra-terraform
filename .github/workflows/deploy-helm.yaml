@@ -40,6 +40,8 @@ jobs:
         env:
           TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_basic_auth_user: ${{ secrets.BASIC_AUTH_USER }}
+          TF_VAR_basic_auth_pass: ${{ secrets.BASIC_AUTH_PASS }}
         run: terraform plan -input=false
 
       - name: Terraform Apply
@@ -47,6 +49,8 @@ jobs:
         env:
           TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_basic_auth_user: ${{ secrets.BASIC_AUTH_USER }}
+          TF_VAR_basic_auth_pass: ${{ secrets.BASIC_AUTH_PASS }}
         run: terraform apply -auto-approve -input=false
 
       

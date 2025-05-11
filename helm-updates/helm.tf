@@ -118,6 +118,49 @@ resource "helm_release" "promtail" {
   depends_on = [kubernetes_namespace.monitoring]
 }
 
+
+resource "helm_release" "argocd" {
+  name       = "argocd"
+  namespace  = "argocd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
+  version    = "8.0.0"
+
+  create_namespace = true
+
+  values = [
+    yamlencode({
+      global = {
+        domain = "gitops.rigettidemo.com"
+      }
+      configs = {
+        params = {
+          "server.insecure" = true
+        }
+      }
+      server = {
+        ingress = {
+          enabled           = true
+          ingressClassName  = "nginx"
+          annotations = {
+            "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"
+            "nginx.ingress.kubernetes.io/backend-protocol"   = "HTTP"
+            "kubernetes.io/tls-acme"                          = "false"
+            "cert-manager.io/cluster-issuer"                 = "letsencrypt-prod"
+          }
+          extraTls = [
+            {
+              hosts      = ["gitops.rigettidemo.com"]
+              secretName = "gitops-tls"
+            }
+          ]
+        }
+      }
+    })
+  ]
+}
+
+
 resource "helm_release" "loki" {
   name       = "loki"
   namespace  = kubernetes_namespace.monitoring.metadata[0].name

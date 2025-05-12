@@ -15,6 +15,21 @@ Infrastructure as Code for provisioning a complete EKS environment on AWS using 
 └── README.md
 
 
+.
+├── README.md
+├── eks-cluster
+│   ├── eks.tf
+│   ├── provider.tf
+│   ├── variables.tf
+│   └── vpc.tf
+├── helm-updates
+│   ├── helm.tf
+│   ├── provider.tf
+│   └── variables.tf
+└── infra-admin
+    ├── provider.tf
+    └── resources.tf
+
 
 ---
 
@@ -91,14 +106,8 @@ env:
   TF_VAR_cluster: rigetti-demo
   TF_VAR_region: us-east-1
   TF_VAR_cluster_version: 1.32
+```
 
-Edit `variables.tf` as needed:
-
-```hcl
-variable "cluster"         { default = "rigetti-demo" }
-variable "region"          { default = "us-east-1" }
-variable "ami_type"        { default = "AL2_x86_64" }
-variable "cluster_version" { default = "1.27" }
 
 
 ### 3. Trigger Deployments

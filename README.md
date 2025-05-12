@@ -6,16 +6,7 @@ Infrastructure as Code for provisioning a complete EKS environment on AWS using 
 
 ## Project Structure
 
-.
-├── infra-admin/ # Admin resources: bastion host and ecr deploy
-├── eks-cluster/ # EKS cluster and node group provisioning
-├── helm-updates/ # Helm charts (ingress, ArgoCD, cert-manager, chartmuseum, ebs-cs-driver, Kube-prometheus-stack, Loki)
-├── .github/workflows/ # GitHub Actions pipelines for CI/CD
-├── variables.tf # Shared Terraform input variables
-└── README.md
-
-
-<pre> ```text . ├── infra-admin/ # Admin resources: bastion host and ECR deploy ├── eks-cluster/ # EKS cluster and node group provisioning ├── helm-updates/ # Helm charts (Ingress, ArgoCD, cert-manager, ChartMuseum, EBS CSI driver, Kube-prometheus-stack, Loki) ├── .github/workflows/ # GitHub Actions pipelines for CI/CD ├── variables.tf # Shared Terraform input variables └── README.md ``` </pre>
+![Project Structure](images/Pic3.png)
 
 
 ---
@@ -47,6 +38,16 @@ Infrastructure as Code for provisioning a complete EKS environment on AWS using 
 - Key pair generation
 - SSH security group rules
 - Integration with subnet and VPC lookup
+
+---
+
+
+### Architecture
+
+![Project Structure](images/Pic1.png)
+
+![Project Structure](images/Pic2.png)
+
 
 ---
 
@@ -106,5 +107,21 @@ Push to the `main` branch or commit changes in any of the following directories:
 - `helm-updates/`
 
 Workflows will automatically run, plan, and apply the Terraform changes.
+
+
+### 4. Application URLs
+
+Below are the key services deployed via Helm and their associated domains:
+
+| Application      | Description                      | URL                             |
+|------------------|----------------------------------|----------------------------------|
+| Grafana          | Monitoring dashboard             | https://monitoring.rigettidemo.com |
+| Alertmanager     | Alerting service                 | https://alertmanager.rigettidemo.com |
+| Argo CD          | GitOps UI for deployments        | https://gitops.rigettidemo.com |
+| ChartMuseum      | Helm chart repository            | https://charts.rigettidemo.com |
+| Hash Store       | Custom app service (Go backend)  | https://hash-store.rigettidemo.com |
+
+> ⚠️ Ensure DNS and TLS (via cert-manager) are correctly configured for all routes.
+
 
 

@@ -15,20 +15,7 @@ Infrastructure as Code for provisioning a complete EKS environment on AWS using 
 └── README.md
 
 
-.
-├── README.md
-├── eks-cluster
-│   ├── eks.tf
-│   ├── provider.tf
-│   ├── variables.tf
-│   └── vpc.tf
-├── helm-updates
-│   ├── helm.tf
-│   ├── provider.tf
-│   └── variables.tf
-└── infra-admin
-    ├── provider.tf
-    └── resources.tf
+<pre> ```text . ├── infra-admin/ # Admin resources: bastion host and ECR deploy ├── eks-cluster/ # EKS cluster and node group provisioning ├── helm-updates/ # Helm charts (Ingress, ArgoCD, cert-manager, ChartMuseum, EBS CSI driver, Kube-prometheus-stack, Loki) ├── .github/workflows/ # GitHub Actions pipelines for CI/CD ├── variables.tf # Shared Terraform input variables └── README.md ``` </pre>
 
 
 ---

@@ -112,7 +112,6 @@ Below are the key services deployed via Helm and their associated domains:
 | ChartMuseum      | Helm chart repository            | https://charts.rigettidemo.com |
 | Hash Store       | Custom app service (Go backend)  | https://hash-store.rigettidemo.com |
 
-> ⚠️ Ensure DNS and TLS (via cert-manager) are correctly configured for all routes.
 
 
 

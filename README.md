@@ -4,13 +4,6 @@ Infrastructure as Code for provisioning a complete EKS environment on AWS using 
 
 ---
 
-## Project Structure
-
-![Project Structure](images/Pic3.png)
-
-
----
-
 ## Features
 
 ### ✅ EKS Cluster (eks-cluster/)
@@ -43,8 +36,6 @@ Infrastructure as Code for provisioning a complete EKS environment on AWS using 
 
 
 ### Architecture
-
-![Project Structure](images/Pic1.png)
 
 ![Project Structure](images/Pic2.png)
 
